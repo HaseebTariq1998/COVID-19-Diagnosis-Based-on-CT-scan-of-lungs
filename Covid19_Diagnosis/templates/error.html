@@ -1,0 +1,36 @@
+<html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        .img{
+          width:"200px";
+          height:"200px";
+        }
+        .center{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 150px;
+        }
+        @media only screen and (max-width:750px){
+          .center{
+            display: block;  
+            margin-left: 20px;          
+          }
+        }
+
+      </style>
+    </head>
+    <body>
+        <div class="center">
+          <img src="{{ url_for('static', filename='images/warning.png') }}">
+          <div>
+            <h1>Issue in Database Functionality</h1>
+            <p>Either database is not properly connect with server or there is some <br> issue in database operation</p>
+          </div>
+
+
+        </div>
+
+    </body>
+</html>

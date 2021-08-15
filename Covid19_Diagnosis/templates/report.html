@@ -1,0 +1,121 @@
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/pizza.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+<body style="margin: 10px">
+   <div class="navbar">
+                <img class="logo" src="{{ url_for('static', filename='images/logo.png') }}">
+                <nav>
+                    <ul id="menulist">
+                        <li><a href="/">Test</a></li>
+                        <li><a href="/graph">Stats</a></li>
+                    </ul>
+                </nav>
+                <img class="menu-icon" src="{{ url_for('static', filename='images/menu.jpg') }}" onclick="togglemenu()">
+            </div>
+   <div class="line"></div>
+
+<div id="down">
+            <div class="report-heading" id="result-heading">
+                <h1>Report</h1>
+            </div>
+
+            <div class="popup" id="result-menu">
+                <div class="result">
+                    <h2>{{resulthead}}</h2>
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                        <div class="popup-content">
+                            <span class="test-results">Name  </span>
+                        </div>
+                        <div class="popup-content">
+                            <span class="test-results">CNIC
+                            </span>
+                        </div>
+                        <div class="popup-content">
+                            <span class="test-results">Age
+                                </span>
+                        </div>
+                        <div class="popup-content">
+                            <span class="test-results">City
+
+                            </span>
+                        </div>
+                        <div class="popup-content">
+                            <span class="test-results">Gender
+                            </span>
+                        </div>
+                        <div class="popup-content">
+                            <span class="test-results">Result
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="popup-content">
+                            <span class="test-answers">{{name}}
+                            </span>
+                        </div><div class="popup-content">
+                            <span class="test-answers">{{cnic}}
+                            </span>
+                        </div><div class="popup-content">
+                            <span class="test-answers">{{age}}
+                            </span>
+                        </div><div class="popup-content">
+                            <span class="test-answers">{{city}}
+                            </span>
+                        </div><div class="popup-content">
+                            <span class="test-answers">{{gender}}
+                            </span>
+                        </div><div class="popup-content">
+                            <span class="test-answers">{{result}}
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div style="margin-top: 30px; margin-left: 10px">
+                    <span>CONTROL: No traces of ground glass opacity was found hence person is not infected by Covid-19 virus</span>
+                </div>
+                <div style="margin-top: 5px; margin-left: 10px">
+                    <span>REGULAR: Some traces of ground glass opacities were found hence person is suffering from mild Covid-19</span>
+                </div>
+                <div style="margin-top: 5px; margin-left: 10px">
+                    <span>SEVERE:  Intence traces of ground glass opacities are deteced hence person is suffering from severe Covid-19</span>
+                </div>
+
+            </div>
+</div>
+        <div class="download-button">
+            <button id="download" >Download PDF</button>
+        </div>
+  <script>
+            var menuList = document.getElementById("menulist");
+            menuList.style.maxHeight="0px";
+            function togglemenu(){
+            if(menuList.style.maxHeight=="0px")
+            {
+                menuList.style.maxHeight="130px";
+            }
+            else
+            {
+                menuList.style.maxHeight="0px";
+            }
+            }
+                window.onload=function(){
+                document.getElementById("download").addEventListener(
+               "click",()=>{
+                 const page =this.document.getElementById("down");
+                  var opt = {
+                      filename: 'report.pdf'
+                  };
+                html2pdf().from(page).set(opt).save();
+                 })
+            }
+
+  </script>
+  </body>
+</html>

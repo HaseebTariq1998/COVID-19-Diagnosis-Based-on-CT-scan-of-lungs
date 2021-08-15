@@ -1,0 +1,259 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/pizza.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawLineChart);
+
+
+      function drawLineChart() {
+          const m =parseInt(document.getElementById("mon").textContent);
+          const tu =parseInt(document.getElementById("tue").textContent);
+          const w =parseInt(document.getElementById("wed").textContent);
+          const th =parseInt(document.getElementById("thu").textContent);
+          const f =parseInt(document.getElementById("fri").textContent);
+          const sa =parseInt(document.getElementById("sat").textContent);
+          const su =parseInt(document.getElementById("sun").textContent);
+
+          const d1 =document.getElementById("d1").textContent;
+          const d2 =document.getElementById("d2").textContent;
+          const d3 =document.getElementById("d3").textContent;
+          const d4 =document.getElementById("d4").textContent;
+          const d5 =document.getElementById("d5").textContent;
+          const d6 =document.getElementById("d6").textContent;
+          const d7 =document.getElementById("d7").textContent;
+
+          var data = google.visualization.arrayToDataTable([
+          ['Days', 'No. of Cases'],
+          [d1,  m],
+          [d2,  tu],
+          [d3,  w],
+          [d4,  th],
+          [d5,  f],
+          [d6,  sa],
+          [d7,  su],
+        ]);
+
+        var options = {
+            animationEnabled: true,
+          title: 'Weekly Report of cases around Pakistan',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+      google.charts.load("current", {packages:['corechart']});
+      google.charts.setOnLoadCallback(drawBarChart);
+      function drawBarChart() {
+          const i =parseInt(document.getElementById("isb").textContent);
+          const l =parseInt(document.getElementById("lhr").textContent);
+          const k =parseInt(document.getElementById("kar").textContent);
+          const p =parseInt(document.getElementById("peh").textContent);
+          const o =parseInt(document.getElementById("oth").textContent);
+
+          var data = google.visualization.arrayToDataTable([
+            ["Element", "Cases", { role: "style" } ],
+            ["Islamabad", i, "darkslategrey"],
+            ["Lahore", l, "darkslategrey"],
+            ["Karachi", k, "darkslategrey"],
+            ["Peshawar", p, "darkslategrey"],
+              ["Others", o, "darkslategrey"]
+          ]);
+
+          var view = new google.visualization.DataView(data);
+          view.setColumns([0, 1,
+                           { calc: "stringify",
+                             sourceColumn: 1,
+                             type: "string",
+                             role: "annotation" },
+                           2]);
+
+          var options = {
+            title: "Total Covid Cases In different Cities",
+
+
+            bar: {groupWidth: "50%"},
+            legend: { position: "none" },
+          };
+          var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+          chart.draw(view, options);
+      }
+    </script>
+    <style>
+        .chart{
+            align-items: center;
+            justify-content: center;
+            margin-left: 50px;
+        }
+        #columnchart_values{
+            width: 1000px;
+            height: 600px;
+        }
+        #curve_chart{
+            width: 1000px;
+            height: 600px;
+            
+        }
+        .case{
+            font-size: 30px; 
+            color: darkslategray; 
+            font-weight: bold;
+            margin-right: 30px;
+        }
+        .content-table{
+            align-items: center;
+            justify-content: center;   
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+        }
+        .table_head{
+            background-color: darkslategray;
+            color: whitesmoke;
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .table_bottom{
+            border-bottom: 2px solid darkslategray; 
+            border-right: 2px solid darkslategray; 
+            font-size: 20px;
+        }
+        .head{
+            padding: 12px 15px;
+        }
+        .tab{
+            align-items: center; 
+            text-align: center; 
+            margin-top: 30px; 
+            justify-content: center; 
+            display: flex;
+        }
+        @media only screen and (max-width:750px){
+        #columnchart_values{
+            width: 500px;
+            height: 400px;
+        }
+        #curve_chart{
+            width: 500px;
+            height:400px;
+            
+        }
+        .case{
+            font-size: 20px;
+        }   
+        .table_head{
+            font-size: 15px;
+        }
+        .table_bottom{
+            font-size: 15px;
+        }
+        .tab{
+            width: 400px;
+            display: block;
+        }
+        .content-table{
+            min-width: 350px;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+                <img class="logo" src="{{ url_for('static', filename='images/logo.png') }}">
+                <nav>
+                    <ul id="menulist">
+                        <li><a href="/">Test</a></li>
+                        <li><a href="/graph">Stats</a></li>
+                    </ul>
+                </nav>
+                <img class="menu-icon" src="{{ url_for('static', filename='images/menu.jpg') }}" onclick="togglemenu()">
+        </div>
+        <div class="line"></div>
+        <div class="tab" style="">
+            <span class="case" >Current Cases in Pakistan </span>
+        <table class="content-table">
+            <thead>
+            <tr class="table_head">
+                <th class="head" >Control</th>
+                <th class="head" >Regular</th>
+                <th class="head" >Severe</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table_bottom" >
+                <td style="padding: 12px 15px; font-weight: bold; text-align: center; border-left: 3px solid darkslategray;">{{ c }}</td>
+                <td style="padding: 12px 15px; font-weight: bold; text-align: center; border-left: 2px solid darkslategray;">{{ r }}</td>
+                <td style="padding: 12px 15px; font-weight: bold; text-align: center; border-left: 2px solid darkslategray;">{{ s }}</td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        </div>
+        <!--Line Chart-->
+        <div class="chart">
+             <div id="curve_chart"></div>
+        </div>
+        <!--Line Chart-->
+ <div class="line"></div>
+        <!---bar chart-->
+        <div class="chart">
+            <div id="columnchart_values" ></div>
+        </div>
+        <!--Bar Chart-->
+    </div>
+    <div class="days" style="display: none;">
+        <p id="d1">{{ d1 }}</p>
+        <p id="d2">{{ d2 }}</p>
+        <p id="d3">{{ d3 }}</p>
+        <p id="d4">{{ d4 }}</p>
+        <p id="d5">{{ d5 }}</p>
+        <p id="d6">{{ d6 }}</p>
+        <p id="d7">{{ d7 }}</p>
+
+        <p id="mon">{{ m }}</p>
+        <p id="tue">{{ tu }}</p>
+        <p id="wed">{{ w }}</p>
+        <p id="thu">{{ th }}</p>
+        <p id="fri">{{ f }}</p>
+        <p id="sat">{{ sa }}</p>
+        <p id="sun">{{ su }}</p>
+        <p id="isb">{{ i }}</p>
+        <p id="lhr">{{ l }}</p>
+        <p id="kar">{{ k }}</p>
+        <p id="peh">{{ p }}</p>
+        <p id="oth">{{ o }}</p>
+
+    </div>
+    <script>
+        var menuList = document.getElementById("menulist");
+        var chart = document.getElementById("curve_chart")
+        var bar = document.getElementById("columnchart_values");
+        menuList.style.maxHeight="0px";
+        function togglemenu(){
+            if(menuList.style.maxHeight=="0px")
+            {
+                menuList.style.maxHeight="130px";
+
+            }
+            else
+            {
+                menuList.style.maxHeight="0px";
+            }
+        }
+
+    </script>
+    </body>
+</html>

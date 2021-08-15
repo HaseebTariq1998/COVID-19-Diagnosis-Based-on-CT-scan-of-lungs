@@ -1,0 +1,40 @@
+
+network$value <- NULL
+print(network)
+g.network <- graph.data.frame(network)
+plot(g.network)
+print(gorder(g.network))
+
+
+library(igraph)
+setwd("D:/SEM#7/big data analysis/ass3")
+network <- read.csv("stack_network_links.csv")
+
+g <- graph.data.frame(network)
+print(V(g))
+
+
+links <- read.csv("stack_network_links.csv", header=T, as.is=T)
+nodes <- read.csv("stack_network_nodes.csv", header=T, as.is=T)
+print( length(unique(nodes$name)))
+print(nrow(unique(links[,c("source", "target")])))
+
+links <- aggregate(links[,3], links[,-3], sum)
+
+links <- links[order(links$target, links$source),]
+
+colnames(links)[3] <- "weight"
+
+rownames(links) <- NULL
+
+head(links)
+
+
+
+
+
+MatrixA <- matrix(data = 1:9, nrow = 3, ncol = 3)
+print(MatrixA)
+colnames(MatrixA)<-c("one", "two", "three")
+rownames(MatrixA) <- c("one", "two", "three")
+net=graph.adjacency(MatrixA,mode="directed",weighted=TRUE)

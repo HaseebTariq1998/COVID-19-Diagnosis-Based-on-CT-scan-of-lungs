@@ -1,0 +1,232 @@
+<html>
+<head>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pizza.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .loader{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin-top: 250px;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+.load {
+    position: relative;
+    margin: 50px auto;
+    width: 100px;
+    height: 80px;
+    
+  }
+  
+  .gear {
+    position: absolute;
+    z-index: -10;
+    width: 40px;
+    height: 40px;
+    animation: spin 5s infinite;
+  }
+  
+  .two {
+    left: 40px;
+    width: 80px;
+    height: 80px;
+    animation: spin-reverse 5s infinite;
+  }
+  
+  .three {
+    top: 45px;
+    left: -10px;
+    width: 60px;
+    height: 60px;
+  }
+  
+  @keyframes spin {
+    50% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes spin-reverse {
+    50% {
+      transform: rotate(-360deg);
+    }
+  }
+  
+  .lil-circle {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: inset 0 0 10px 2px gray, 0 0 50px white;
+    width: 100px;
+    height: 100px;
+    opacity: .65;
+  }
+  
+  .blur-circle {
+    position: absolute;
+    top: -19px;
+    left: -19px;
+  }
+  
+  .text {
+    color: darkslategray;
+    font-weight: bold;
+    text-align: center;
+    
+  }
+  
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+  
+    </style>
+</head>
+<body>
+        <div id="rem" class="container">
+            <div class="navbar">
+                <img class="logo" src="{{ url_for('static', filename='images/logo.png') }}">
+                <nav>
+                    <ul id="menulist">
+                        <li><a href="/">Test</a></li>
+                        <li><a href="/graph">Stats</a></li>
+                    </ul>
+                </nav>
+                <img class="menu-icon" src="{{ url_for('static', filename='images/menu.jpg') }}" onclick="togglemenu()">
+            </div>
+            <div class="line"></div>
+            <div class="heading">
+                <h1 >Welcome to Covid Test Portal</h1>
+            </div>
+            <form name="fields" method="POST" action = "http://192.168.18.16:5000/uploader" enctype="multipart/form-data">
+                <div class="center">
+                    <div class="values">
+                        <div class="patient-details">
+                            <h2>Enter Patient's Details</h2>
+                        </div>
+                        <div class="user-details">
+                            <div class="input-box">
+                                <span class="details">Full Name</span>
+                                <input type="text" name="fullname" placeholder="Enter Your Full Name" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">CNIC</span>
+                                <input type="text" name="cnic" placeholder="Enter CNIC without Dashes" pattern="\d*" title="Numbers only, please." required>
+                            </div><div class="input-box">
+                                <span class="details">Age</span>
+                                <input type="text" name="age" placeholder="Enter Your Age" pattern="\d*" title="Numbers only, please." required>
+                            </div><div class="input-box">
+                                <span class="details">City</span>
+                                <input type="text" name="city" placeholder="Enter Your City" required>
+                            </div>
+                        </div>
+                        <div class="gender-details">
+                            <span class="gender-title">Gender</span>
+                            <div class="category">
+                                <input type="radio" name="gender" value="Male" class="label" id="dot-1" value="Male" required>
+                                <span class="gender">Male</span>
+                                <input type="radio" name="gender" value="Female" class="label" id="dot-2" value="Female" required>
+                                <span class="gender">Female</span>
+                            </div>
+                        </div>
+                </div>
+
+
+                <div class="form-input">
+
+                        <div class="preview">
+                            <img id="file-ip-1-preview">
+
+                        </div>
+                        <label id="up-button" for="file-ip-1">Upload CT-Scan Image</label>
+                        <input type="file" id="file-ip-1" name="file1" accept="image/*" onchange="showPreview(event);" >
+
+
+                </div>
+                </div>
+
+
+                <div class="test_button">
+                    <button type="submit" id="test-button-1" onclick="showAnimation();"> Start Test </button>
+                </div>
+            </form>
+            
+        </div>
+        <div id="animate1" class="loader">
+            <div class="load">
+                <div class="gear one">
+                <svg id="blue" viewbox="0 0 100 100" fill="black">
+                    <path d="M97.6,55.7V44.3l-13.6-2.9c-0.8-3.3-2.1-6.4-3.9-9.3l7.6-11.7l-8-8L67.9,20c-2.9-1.7-6-3.1-9.3-3.9L55.7,2.4H44.3l-2.9,13.6              c-3.3,0.8-6.4,2.1-9.3,3.9l-11.7-7.6l-8,8L20,32.1c-1.7,2.9-3.1,6-3.9,9.3L2.4,44.3v11.4l13.6,2.9c0.8,3.3,2.1,6.4,3.9,9.3              l-7.6,11.7l8,8L32.1,80c2.9,1.7,6,3.1,9.3,3.9l2.9,13.6h11.4l2.9-13.6c3.3-0.8,6.4-2.1,9.3-3.9l11.7,7.6l8-8L80,67.9              c1.7-2.9,3.1-6,3.9-9.3L97.6,55.7z M50,65.6c-8.7,0-15.6-7-15.6-15.6s7-15.6,15.6-15.6s15.6,7,15.6,15.6S58.7,65.6,50,65.6z"></path>
+                </svg>
+                </div>
+                <div class="gear two">
+                <svg id="pink" viewbox="0 0 100 100" fill="darkslategray">
+                    <path d="M97.6,55.7V44.3l-13.6-2.9c-0.8-3.3-2.1-6.4-3.9-9.3l7.6-11.7l-8-8L67.9,20c-2.9-1.7-6-3.1-9.3-3.9L55.7,2.4H44.3l-2.9,13.6              c-3.3,0.8-6.4,2.1-9.3,3.9l-11.7-7.6l-8,8L20,32.1c-1.7,2.9-3.1,6-3.9,9.3L2.4,44.3v11.4l13.6,2.9c0.8,3.3,2.1,6.4,3.9,9.3              l-7.6,11.7l8,8L32.1,80c2.9,1.7,6,3.1,9.3,3.9l2.9,13.6h11.4l2.9-13.6c3.3-0.8,6.4-2.1,9.3-3.9l11.7,7.6l8-8L80,67.9              c1.7-2.9,3.1-6,3.9-9.3L97.6,55.7z M50,65.6c-8.7,0-15.6-7-15.6-15.6s7-15.6,15.6-15.6s15.6,7,15.6,15.6S58.7,65.6,50,65.6z"></path>
+                </svg>
+                </div>
+                <div class="gear three">
+                <svg id="yellow" viewbox="0 0 100 100" fill="dimgrey">
+                    <path d="M97.6,55.7V44.3l-13.6-2.9c-0.8-3.3-2.1-6.4-3.9-9.3l7.6-11.7l-8-8L67.9,20c-2.9-1.7-6-3.1-9.3-3.9L55.7,2.4H44.3l-2.9,13.6              c-3.3,0.8-6.4,2.1-9.3,3.9l-11.7-7.6l-8,8L20,32.1c-1.7,2.9-3.1,6-3.9,9.3L2.4,44.3v11.4l13.6,2.9c0.8,3.3,2.1,6.4,3.9,9.3              l-7.6,11.7l8,8L32.1,80c2.9,1.7,6,3.1,9.3,3.9l2.9,13.6h11.4l2.9-13.6c3.3-0.8,6.4-2.1,9.3-3.9l11.7,7.6l8-8L80,67.9              c1.7-2.9,3.1-6,3.9-9.3L97.6,55.7z M50,65.6c-8.7,0-15.6-7-15.6-15.6s7-15.6,15.6-15.6s15.6,7,15.6,15.6S58.7,65.6,50,65.6z"></path>
+                </svg>
+                </div>
+                <div class="lil-circle"></div>
+                <svg class="blur-circle">
+                <filter id="blur">
+                    <fegaussianblur in="SourceGraphic" stddeviation="13"></fegaussianblur>
+                </filter>
+                <circle cx="70" cy="70" r="66" fill="transparent" stroke="white" stroke-width="40" filter="url(#blur)"></circle>
+                </svg>
+            </div>
+            <div class="text">Processing</div>
+        </div>
+        
+        <script>
+            function showPreview(event){
+            if(event.target.files.length>0){
+                var src = URL.createObjectURL(event.target.files[0]);
+                var preview = document.getElementById("file-ip-1-preview");
+                preview.src = src;
+                preview.style.display = "block";
+                var test=document.getElementById("test-button-1");
+                test.style.display = "block";
+                var upload =document.getElementsByName("up-button");
+                }
+
+            }
+
+
+            var menuList = document.getElementById("menulist");
+            menuList.style.maxHeight="0px";
+            function togglemenu(){
+            if(menuList.style.maxHeight=="0px")
+            {
+                menuList.style.maxHeight="130px";
+            }
+            else
+            {
+                menuList.style.maxHeight="0px";
+            }
+            }
+            function showAnimation()
+            {
+                var n=document.forms["fields"]["fullname"].value;
+                var c=document.forms["fields"]["cnic"].value;
+                var a=document.forms["fields"]["age"].value;
+                var ci=document.forms["fields"]["city"].value;
+                var g=document.forms["fields"]["gender"].value;
+                var show = document.getElementById("animate1");
+       
+                var hide = document.getElementById("rem");
+                if(n == "" || c == "" || a == "" || ci == "" || g=="" || isNaN(a) || isNaN(c)) 
+                {
+                    
+                }
+                else{
+                    show.style.display="block";
+                    hide.style.display="none";
+                }
+                
+            }
+
+        </script>
+    </body>
+</html>

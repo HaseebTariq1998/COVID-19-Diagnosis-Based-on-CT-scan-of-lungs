@@ -1,0 +1,6 @@
+23	big data 
+24	spm
+25	
+26	eel
+27	nn
+28	pp
